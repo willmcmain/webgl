@@ -37,5 +37,6 @@ module.exports = {
         historyApiFallback: true,
         contentBase: __dirname + '/dist',
         port: 9000
-    }
+    },
+    devtool: 'eval-source-map',
 }
