@@ -99,10 +99,21 @@ function main() {
     gl.enable(gl.CULL_FACE)
     gl.enable(gl.DEPTH_TEST)
 
-    const projMatrix = mat4.orthographic(-4, 4, -3, 3, -3, 3)
+    //const projMatrix = mat4.orthographic(-4, 4, -3, 3, -3, 3)
+    const projMatrix = mat4.perspective(
+        50*Math.PI/180,
+        CANVAS_WIDTH/CANVAS_HEIGHT,
+        10,
+        50)
 
     let spin = 0
-    const drawScene = function() {
+    let last = 0
+    const drawScene = function(time) {
+        // FPS counter
+        let dtime = time - last
+        last = time
+        document.getElementById('fps').innerHTML = 1000 / dtime
+
         gl.viewport(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
         gl.clearColor(0, 0, 0, 1)
@@ -112,7 +123,8 @@ function main() {
 
         spin += 0.01
         //let matrix = mat4.scale(0.4, 0.4, 0.4)
-        let matrix = mat4.zRotate(spin/2, matrix)
+        let matrix = mat4.translate(0, 0, -12)
+        matrix = mat4.zRotate(spin/2, matrix)
         matrix = mat4.xRotate(spin*2, matrix)
         matrix = mat4.yRotate(spin, matrix)
 

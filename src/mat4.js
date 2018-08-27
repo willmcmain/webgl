@@ -149,7 +149,7 @@ export const identity = function() {
     ]
 }
 
-export const orthographic = function( left, right, bottom, top, near, far) {
+export const orthographic = function(left, right, bottom, top, near, far) {
     return [
         2 / (right - left), 0, 0, 0,
         0, 2 / (top - bottom), 0, 0,
@@ -159,5 +159,25 @@ export const orthographic = function( left, right, bottom, top, near, far) {
         (bottom + top) / (bottom - top),
         (near + far) / (near - far),
         1,
+    ]
+}
+
+/**
+ * 
+ * @param {number} fov in radians
+ * @param {number} aspect aspect ratio of the viewport
+ * @param {number} near 
+ * @param {number} far 
+ * @returns {(number|Array)} Perspective projection matrix
+ */
+export const perspective = function(fov, aspect, near, far) {
+    let f = Math.tan(Math.PI * 0.5 - 0.5 * fov)
+    let rangeInv = 1.0 / (near - far)
+
+    return [
+        f / aspect, 0, 0,                    0,
+        0,          f, 0,                    0,
+        0,          0, (near+far)*rangeInv, -1,
+        0,          0, 2*near*far*rangeInv,  0
     ]
 }
